@@ -45,9 +45,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback, Configure.OnFragmentInteractionListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -93,9 +93,6 @@ public class MapsActivity extends AppCompatActivity
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, "Check out Byway! It's a new idea by Pradyumna. App coded by Ashutosh");
                 startActivity(share);
-            case R.id.app_bar_edit:
-                Configure fragment = new Configure();
-                fragment.show(getSupportFragmentManager(), fragment.getTag());
             default:
                 Toast.makeText(this, "Button clicked", Toast.LENGTH_LONG).show();
         }
