@@ -10,4 +10,8 @@
     <string name="newuserquestion">New User ?</string>
     <string name="signup">Sign Up</string>
     <string name="title_activity_maps">Map</string>
+    <string name="mapsactivity_hint_starting_location">Starting Location</string>
+    <string name="mapsactivity_hint_destination">Destination Location</string>
+    <string name="appbar_mode_edit">Edit Mode</string>
+    <string name="appbar_share">Share This App</string>
 </resources>
