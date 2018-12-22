@@ -44,9 +44,8 @@
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.absathe.byway.RiderActivity" />
+                android:value="com.absathe.byway.MainActivity" />
         </activity>
-        <activity android:name=".RiderActivity"></activity>
     </application>
 
 </manifest>

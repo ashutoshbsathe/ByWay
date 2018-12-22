@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -44,7 +46,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity
+        implements OnMapReadyCallback, Configure.OnFragmentInteractionListener {
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -82,6 +85,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.app_bar_share:
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, "Check out Byway! It's a new idea by Pradyumna. App coded by Ashutosh");
+                startActivity(share);
+            case R.id.app_bar_edit:
+                Configure fragment = new Configure();
+                fragment.show(getSupportFragmentManager(), fragment.getTag());
+            default:
+                Toast.makeText(this, "Button clicked", Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
     @Override
     public void onPause() {
         super.onPause();
@@ -222,5 +241,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             default:
         }
+    }
+
+    public void onConfigureInteraction() {
+        Log.d("MapsActivityInterface", "Just so you know");
     }
 }
