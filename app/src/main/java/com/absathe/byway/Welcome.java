@@ -1,21 +1,15 @@
 package com.absathe.byway;
 
-import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
+
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.florent37.shapeofview.shapes.RoundRectView;
-
-import androidx.appcompat.widget.DrawableUtils;
 
 public class Welcome extends Activity {
 
@@ -76,6 +70,7 @@ public class Welcome extends Activity {
                         lastAction= MotionEvent.ACTION_MOVE;
                         break;
                     case MotionEvent.ACTION_UP:
+                        String token = null;
                         float orig_width= getResources().getDimension(R.dimen.slider_width);
                         float orig_height = getResources().getDimension(R.dimen.slider_height);
                         ResizeAnimation resizeAnimationOrig = new ResizeAnimation(
@@ -91,6 +86,26 @@ public class Welcome extends Activity {
                         EXPAND_ANIMATION_SHOWN = 0;
                         messageOnSwipe.setText(getString(R.string.welcome_swipe_neutral));
                         headerText.setText(getString(R.string.welcome_swipe_neutral_header));
+                        float newY_reset = motionEvent.getRawY() +dY;
+                        if(newY_reset > MAX_SCROLL_AMOUNT)
+                            newY_reset = MAX_SCROLL_AMOUNT;
+                        else if(newY_reset < -MAX_SCROLL_AMOUNT)
+                            newY_reset = -MAX_SCROLL_AMOUNT;
+                        if(newY_reset == MAX_SCROLL_AMOUNT) {
+                            Toast.makeText(Welcome.this, "SHARE SELECTED", Toast.LENGTH_LONG).show();
+                            token = "SHARE";
+                        }
+                        else if(newY_reset == -MAX_SCROLL_AMOUNT) {
+                            Toast.makeText(Welcome.this, "RIDE SELECTED", Toast.LENGTH_LONG).show();
+                            token = "RIDE";
+                        }
+                        if(token != null) {
+                            Intent intent = new Intent(Welcome.this, MapsActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("token", token);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                         break;
                     default:
                         return false;
