@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="slider_width">90dp</dimen>
+    <dimen name="slider_height">90dp</dimen>
+    <dimen name="slider_height_expanded">250dp</dimen>
+</resources>

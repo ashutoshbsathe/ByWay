@@ -14,4 +14,9 @@
     <string name="mapsactivity_hint_destination">Destination Location</string>
     <string name="appbar_mode_edit">Edit Mode</string>
     <string name="appbar_share">Share This App</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="welcome_swipe_share">SHARE</string>
+    <string name="welcome_swipe_ride">RIDE</string>
+    <string name="welcome_swipe_neutral">SWIPE</string>
+    <string name="welcome_swipe_neutral_header">Swipe the button vertically</string>
 </resources>
