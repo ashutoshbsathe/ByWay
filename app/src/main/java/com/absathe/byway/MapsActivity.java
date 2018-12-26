@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +30,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.arsy.maps_library.MapRipple;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -46,6 +48,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,6 +59,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int MODE  = RIDE;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
+    long MAP_RIPPLE_DURATION = 10000;
+    long MAP_INTER_RIPPLE_DURATION = 3333;
+    long MAP_RIPPLE_DISTANCE = 500;
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -167,6 +173,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .title("You are here")
         );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shaniwarwada, 16));
+        MapRipple mapRipple = new MapRipple(mMap, shaniwarwada, MapsActivity.this);
+        mapRipple.withDistance(MAP_RIPPLE_DISTANCE);
+        mapRipple.withRippleDuration(MAP_RIPPLE_DURATION);
+        mapRipple.withDurationBetweenTwoRipples(MAP_INTER_RIPPLE_DURATION);
+        mapRipple.withFillColor(getColor(R.color.colorAccent));
+        mapRipple.withNumberOfRipples(3);
+        mapRipple.withTransparency(0.85f);
+        mapRipple.startRippleMapAnimation();
         /**
          * Don't make continuous location request for the sake of demo
          */
@@ -276,9 +290,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             default:
         }
-    }
-
-    public void onConfigureInteraction() {
-        Log.d("MapsActivityInterface", "Just so you know");
     }
 }
