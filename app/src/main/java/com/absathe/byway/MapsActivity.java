@@ -28,11 +28,17 @@ import android.view.MenuItem;
 
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,7 +63,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        setSupportActionBar((Toolbar)findViewById(R.id.mapsactivity_bottomappbar));
+        //setSupportActionBar((Toolbar)findViewById(R.id.mapsactivity_topappbar));
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -70,6 +76,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else if(bundle.getString("token", "ABSENT").equals("SHARE")) {
             MODE = SHARE;
         }
+        SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
+                getSupportFragmentManager()
+                        .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment);
+
+        /**
+         * Filter can be modified to suit appllication's needs later
+         */
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
+                .build();
+        autocompleteFragment.setFilter(typeFilter);
+        autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_destination));
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("MapsActivity", "Place: " + place.getName());//get place details here
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("MapsActivity", "An error occurred: " + status);
+            }
+        });
     }
     /*
     @Override

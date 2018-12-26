@@ -15,6 +15,18 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     tools:context=".MapsActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapsactivity_topappbar"
+        android:minHeight="?attr/actionBarSize">
+        <fragment
+            android:id="@+id/mapsactivity_place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment" />
+
+    </com.google.android.material.appbar.AppBarLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,38 +56,13 @@
                     android:orientation="vertical"
                     android:layout_margin="0dp"
                     android:padding="0dp">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/mapsactivity_hint_starting_location"
-                        android:layout_marginTop="5dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/mapsactivity_hint_destination"
-                        android:layout_marginTop="5dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </RelativeLayout>
-    <com.google.android.material.bottomappbar.BottomAppBar
+    <!--com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/mapsactivity_bottomappbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,5 +79,5 @@
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         app:layout_anchor="@id/mapsactivity_bottomappbar"
         app:srcCompat="@drawable/ic_my_location"
-        app:elevation="5dp"/>
+        app:elevation="5dp"/-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
