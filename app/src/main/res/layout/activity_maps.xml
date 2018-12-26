@@ -67,12 +67,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="56dp"
+        android:minHeight="71dp"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="56dp"
+        app:behavior_peekHeight="71dp"
+        app:elevation="5dp"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@android:color/white">
+            <com.github.florent37.shapeofview.shapes.RoundRectView
+                android:layout_width="21dp"
+                android:layout_height="5dp"
+                android:layout_centerInParent="true"
+                android:elevation="4dp"
+                app:shape_roundRect_bottomLeftRadius="999dp"
+                app:shape_roundRect_bottomRightRadius="999dp"
+                app:shape_roundRect_topLeftRadius="999dp"
+                app:shape_roundRect_topRightRadius="999dp"
+                app:shape_roundRect_borderColor="@android:color/white">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray"/>
+            </com.github.florent37.shapeofview.shapes.RoundRectView>
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
