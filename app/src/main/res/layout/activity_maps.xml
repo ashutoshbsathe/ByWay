@@ -15,18 +15,19 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     tools:context=".MapsActivity">
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mapsactivity_topappbar"
-        android:minHeight="?attr/actionBarSize">
+        android:layout_margin="10dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="5dp">
         <fragment
             android:id="@+id/mapsactivity_place_autocomplete_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment" />
+    </androidx.cardview.widget.CardView>
 
-    </com.google.android.material.appbar.AppBarLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

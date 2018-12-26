@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -87,6 +88,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
                 .build();
         autocompleteFragment.setFilter(typeFilter);
+        ImageView searchButton = autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button);
         autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_destination));
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
