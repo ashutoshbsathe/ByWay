@@ -19,4 +19,6 @@
     <string name="welcome_swipe_ride">RIDE</string>
     <string name="welcome_swipe_neutral">SWIPE</string>
     <string name="welcome_swipe_neutral_header">Swipe the button vertically</string>
+    <string name="mapsactivity_help_text">Help</string>
+    <string name="mapsactivity_view_ride_details">View Ride Details</string>
 </resources>
