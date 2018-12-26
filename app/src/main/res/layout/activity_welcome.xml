@@ -83,7 +83,7 @@
                             android:background="@color/colorAccent">
                             <TextView
                                 android:id="@+id/welcome_swipe_text"
-                                android:layout_width="50dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:text="@string/welcome_swipe_neutral"
