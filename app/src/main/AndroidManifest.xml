@@ -44,7 +44,7 @@
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.absathe.byway.MainActivity" />
+                android:value="com.absathe.byway.Welcome" />
         </activity>
         <activity
             android:name=".Welcome"

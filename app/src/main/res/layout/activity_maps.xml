@@ -15,18 +15,31 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     tools:context=".MapsActivity">
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mapsactivity_topappbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="5dp">
-        <fragment
-            android:id="@+id/mapsactivity_place_autocomplete_fragment"
+        android:minHeight="?attr/actionBarSize">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment" />
-    </androidx.cardview.widget.CardView>
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+            <fragment
+                android:id="@+id/mapsactivity_place_autocomplete_fragment_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment" />
+            <fragment
+                android:id="@+id/mapsactivity_place_autocomplete_fragment_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment" />
+        </LinearLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -79,10 +92,9 @@
             android:layout_height="16dp"
             android:background="@android:color/white">
             <com.github.florent37.shapeofview.shapes.RoundRectView
-                android:layout_width="21dp"
+                android:layout_width="25dp"
                 android:layout_height="5dp"
                 android:layout_centerInParent="true"
-                android:elevation="4dp"
                 app:shape_roundRect_bottomLeftRadius="999dp"
                 app:shape_roundRect_bottomRightRadius="999dp"
                 app:shape_roundRect_topLeftRadius="999dp"

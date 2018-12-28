@@ -11,7 +11,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.Manifest;
-import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,6 +26,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -48,20 +49,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback{
+
+    private GoogleMap mMap;
+    private SupportMapFragment mapFragment;
+
+
+    private final long MAP_RIPPLE_DURATION = 10000;
+    private final long MAP_INTER_RIPPLE_DURATION = 3333;
+    private final long MAP_RIPPLE_DISTANCE = 500;
     private final int RIDE = 0;
     private final int SHARE = 1;
     private int MODE  = RIDE;
-    private GoogleMap mMap;
-    private SupportMapFragment mapFragment;
-    long MAP_RIPPLE_DURATION = 10000;
-    long MAP_INTER_RIPPLE_DURATION = 3333;
-    long MAP_RIPPLE_DISTANCE = 500;
+    private final int FRAGMENT_TYPE_SOURCE = 2;
+    private final int FRAGMENT_TYPE_DESTNN = 3;
+
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -70,7 +76,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        //setSupportActionBar((Toolbar)findViewById(R.id.mapsactivity_topappbar));
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -83,32 +88,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else if(bundle.getString("token", "ABSENT").equals("SHARE")) {
             MODE = SHARE;
         }
-        SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
+        SupportPlaceAutocompleteFragment destinationPlaceSelect = (SupportPlaceAutocompleteFragment)
                 getSupportFragmentManager()
-                        .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment);
-
-        /**
-         * Filter can be modified to suit appllication's needs later
-         */
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
-                .build();
-        autocompleteFragment.setFilter(typeFilter);
-        ImageView searchButton = autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_button);
-        autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_destination));
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i("MapsActivity", "Place: " + place.getName());//get place details here
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i("MapsActivity", "An error occurred: " + status);
-            }
-        });
+                .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment_destination);
+        SupportPlaceAutocompleteFragment sourcePlaceSelect = (SupportPlaceAutocompleteFragment)
+                getSupportFragmentManager()
+                .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment_source);
+        destinationPlaceSelect = tuneFragment(destinationPlaceSelect, FRAGMENT_TYPE_DESTNN);
+        sourcePlaceSelect = tuneFragment(sourcePlaceSelect, FRAGMENT_TYPE_SOURCE);
     }
     /*
     @Override
@@ -119,7 +106,56 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return rootView;
     }
     */
+    SupportPlaceAutocompleteFragment tuneFragment(SupportPlaceAutocompleteFragment in, int TYPE) {
+        SupportPlaceAutocompleteFragment autocompleteFragment = in;
+        /**
+         * Filter can be modified to suit appllication's needs later
+         */
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
+                .build();
+        autocompleteFragment.setFilter(typeFilter);
+        View searchView = autocompleteFragment.getView();
+        EditText searchPlace = searchView.findViewById(R.id.place_autocomplete_search_input);
+        ImageView searchIcon = searchView.findViewById(R.id.place_autocomplete_search_button);
+        searchPlace.setBackground(getDrawable(R.drawable.rectangle_white_with_border));
+        searchPlace.setScaleY(0.85f);
+        switch(TYPE) {
+            case FRAGMENT_TYPE_DESTNN:
+                searchIcon.setImageDrawable(getDrawable(R.drawable.ic_place));
+                autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_destination));
+                autocompleteFragment.setOnPlaceSelectedListener(destinationPlaceSelected);
+                break;
+            case FRAGMENT_TYPE_SOURCE:
+                searchIcon.setImageDrawable(getDrawable(R.drawable.ic_adjust));
+                autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_source));
+                autocompleteFragment.setOnPlaceSelectedListener(sourcePlaceSelected);
+                break;
+        }
+        return autocompleteFragment;
+    }
+    PlaceSelectionListener destinationPlaceSelected= new PlaceSelectionListener() {
+        @Override
+        public void onPlaceSelected(Place place) {
 
+        }
+
+        @Override
+        public void onError(Status status) {
+
+        }
+    };
+    PlaceSelectionListener sourcePlaceSelected = new PlaceSelectionListener() {
+        @Override
+        public void onPlaceSelected(Place place) {
+
+        }
+
+        @Override
+        public void onError(Status status) {
+
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -149,7 +185,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
     }
-    /**
+    /*
      * Here's the original page from which a lot of code below has been taken
      * https://stackoverflow.com/questions/44992014/how-to-get-current-location-in-googlemap-using-fusedlocationproviderclient
      */
