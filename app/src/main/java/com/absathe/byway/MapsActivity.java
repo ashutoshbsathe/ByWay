@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +23,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,9 +31,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arsy.maps_library.MapRipple;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -40,6 +45,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
@@ -57,7 +63,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
-
+    private TextView origin;
+    private TextView destination;
 
     private final long MAP_RIPPLE_DURATION = 10000;
     private final long MAP_INTER_RIPPLE_DURATION = 3333;
@@ -65,13 +72,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final int RIDE = 0;
     private final int SHARE = 1;
     private int MODE  = RIDE;
-    private final int FRAGMENT_TYPE_SOURCE = 2;
-    private final int FRAGMENT_TYPE_DESTNN = 3;
+    private final int REQUEST_TYPE_SOURCE = 2;
+    private final int REQUEST_TYPE_DESTNN = 3;
 
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,95 +96,91 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else if(bundle.getString("token", "ABSENT").equals("SHARE")) {
             MODE = SHARE;
         }
-        SupportPlaceAutocompleteFragment destinationPlaceSelect = (SupportPlaceAutocompleteFragment)
-                getSupportFragmentManager()
-                .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment_destination);
-        SupportPlaceAutocompleteFragment sourcePlaceSelect = (SupportPlaceAutocompleteFragment)
-                getSupportFragmentManager()
-                .findFragmentById(R.id.mapsactivity_place_autocomplete_fragment_source);
-        destinationPlaceSelect = tuneFragment(destinationPlaceSelect, FRAGMENT_TYPE_DESTNN);
-        sourcePlaceSelect = tuneFragment(sourcePlaceSelect, FRAGMENT_TYPE_SOURCE);
+        origin = findViewById(R.id.mapsactivity_origin_textview);
+        destination = findViewById(R.id.mapsactivity_destination_textview);
+        origin.setOnClickListener(originClicked);
+        destination.setOnClickListener(destinationClicked);
     }
-    /*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_maps, container, false);
-
-        return rootView;
-    }
-    */
-    SupportPlaceAutocompleteFragment tuneFragment(SupportPlaceAutocompleteFragment in, int TYPE) {
-        SupportPlaceAutocompleteFragment autocompleteFragment = in;
-        /**
-         * Filter can be modified to suit appllication's needs later
-         */
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
-                .build();
-        autocompleteFragment.setFilter(typeFilter);
-        View searchView = autocompleteFragment.getView();
-        EditText searchPlace = searchView.findViewById(R.id.place_autocomplete_search_input);
-        ImageView searchIcon = searchView.findViewById(R.id.place_autocomplete_search_button);
-        searchPlace.setBackground(getDrawable(R.drawable.rectangle_white_with_border));
-        searchPlace.setScaleY(0.85f);
-        switch(TYPE) {
-            case FRAGMENT_TYPE_DESTNN:
-                searchIcon.setImageDrawable(getDrawable(R.drawable.ic_place));
-                autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_destination));
-                autocompleteFragment.setOnPlaceSelectedListener(destinationPlaceSelected);
-                break;
-            case FRAGMENT_TYPE_SOURCE:
-                searchIcon.setImageDrawable(getDrawable(R.drawable.ic_adjust));
-                autocompleteFragment.setHint(getString(R.string.mapsactivity_hint_source));
-                autocompleteFragment.setOnPlaceSelectedListener(sourcePlaceSelected);
-                break;
-        }
-        return autocompleteFragment;
-    }
-    PlaceSelectionListener destinationPlaceSelected= new PlaceSelectionListener() {
+    TextView.OnClickListener originClicked = new TextView.OnClickListener() {
         @Override
-        public void onPlaceSelected(Place place) {
-
-        }
-
-        @Override
-        public void onError(Status status) {
-
+        public void onClick(View view) {
+            try {
+                Intent selectOrigin = new
+                        PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                        .build(MapsActivity.this);
+                Toast toast = Toast.makeText(MapsActivity.this, "Enter your starting location",
+                        Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                startActivityForResult(selectOrigin, REQUEST_TYPE_SOURCE);
+            }
+            catch(GooglePlayServicesRepairableException e) {
+                Toast.makeText(MapsActivity.this, "Please repair your Google Play Services", Toast.LENGTH_LONG).show();
+            }
+            catch(GooglePlayServicesNotAvailableException e) {
+                Toast.makeText(MapsActivity.this, "Please insatll Google Play Services to continue", Toast.LENGTH_LONG).show();
+            }
         }
     };
-    PlaceSelectionListener sourcePlaceSelected = new PlaceSelectionListener() {
+    TextView.OnClickListener destinationClicked = new TextView.OnClickListener() {
         @Override
-        public void onPlaceSelected(Place place) {
-
-        }
-
-        @Override
-        public void onError(Status status) {
-
+        public void onClick(View view) {
+            try {
+                Intent selectOrigin = new
+                        PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                        .build(MapsActivity.this);
+                Toast toast = Toast.makeText(MapsActivity.this, "Enter your destination",
+                        Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                startActivityForResult(selectOrigin, REQUEST_TYPE_DESTNN);
+            }
+            catch(GooglePlayServicesRepairableException e) {
+                Toast.makeText(MapsActivity.this, "Please repair your Google Play Services", Toast.LENGTH_LONG).show();
+            }
+            catch(GooglePlayServicesNotAvailableException e) {
+                Toast.makeText(MapsActivity.this, "Please insatll Google Play Services to continue", Toast.LENGTH_LONG).show();
+            }
         }
     };
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.mapsactivity_bottomappbar_menu, menu);
-        Toast.makeText(this, "Inflated Menu", Toast.LENGTH_LONG).show();
-        super.onCreateOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.app_bar_share:
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, "Check out Byway! It's a new idea by Pradyumna. App coded by Ashutosh");
-                startActivity(share);
-            default:
-                Toast.makeText(this, "Button clicked", Toast.LENGTH_LONG).show();
+    protected void  onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_TYPE_SOURCE) {
+            if(resultCode == Activity.RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(MapsActivity.this, data);
+                origin.setText(place.getName());
+                if(mMap != null) {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(place.getLatLng())
+                            .title("Ride starts here"));
+                }
+            }
+            else if(resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(MapsActivity.this, data);
+                Log.d("MapsActivity", "\n**************\nPlaceAPIError\n**************\n" + status);
+            }
+            else if(resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(MapsActivity.this, "Ride origin unchanged", Toast.LENGTH_SHORT).show();
+            }
         }
-        return true;
+        else if(requestCode == REQUEST_TYPE_DESTNN) {
+            if(resultCode == Activity.RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(MapsActivity.this, data);
+                destination.setText(place.getName());
+                if(mMap != null) {
+                    mMap.addMarker(new MarkerOptions()
+                    .position(place.getLatLng())
+                    .title("Ride ends here"));
+                }
+            }
+            else if(resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(MapsActivity.this, data);
+                Log.d("MapsActivity", "\n**************\nPlaceAPIError\n**************\n" + status);
+            }
+            else if(resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(MapsActivity.this, "Destination location unchanged", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     @Override
     public void onPause() {

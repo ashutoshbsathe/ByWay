@@ -73,19 +73,6 @@ public class Welcome extends Activity {
                         String token = null;
                         float orig_width= getResources().getDimension(R.dimen.slider_width);
                         float orig_height = getResources().getDimension(R.dimen.slider_height);
-                        ResizeAnimation resizeAnimationOrig = new ResizeAnimation(
-                                swipeContainer,
-                                (int)orig_height,
-                                swipeContainer.getHeight()
-                                );
-                        resizeAnimationOrig.setDuration(EXPANT_ANIMATION_DURATION);
-                        swipeContainer.startAnimation(resizeAnimationOrig);
-                        if(lastAction == MotionEvent.ACTION_DOWN)
-                            Toast.makeText(Welcome.this,  "Clicked", Toast.LENGTH_LONG).show();
-                        view.setTranslationY(originalY);
-                        EXPAND_ANIMATION_SHOWN = 0;
-                        messageOnSwipe.setText(getString(R.string.welcome_swipe_neutral));
-                        headerText.setText(getString(R.string.welcome_swipe_neutral_header));
                         float newY_reset = motionEvent.getRawY() +dY;
                         if(newY_reset > MAX_SCROLL_AMOUNT)
                             newY_reset = MAX_SCROLL_AMOUNT;
@@ -105,7 +92,21 @@ public class Welcome extends Activity {
                             bundle.putString("token", token);
                             intent.putExtras(bundle);
                             startActivity(intent);
+                            break;
                         }
+                        if(lastAction == MotionEvent.ACTION_DOWN)
+                            Toast.makeText(Welcome.this,  "Clicked", Toast.LENGTH_LONG).show();
+                        view.setTranslationY(originalY);
+                        EXPAND_ANIMATION_SHOWN = 0;
+                        messageOnSwipe.setText(getString(R.string.welcome_swipe_neutral));
+                        headerText.setText(getString(R.string.welcome_swipe_neutral_header));
+                        ResizeAnimation resizeAnimationOrig = new ResizeAnimation(
+                                swipeContainer,
+                                (int)orig_height,
+                                swipeContainer.getHeight()
+                        );
+                        resizeAnimationOrig.setDuration(EXPANT_ANIMATION_DURATION);
+                        swipeContainer.startAnimation(resizeAnimationOrig);
                         break;
                     default:
                         return false;

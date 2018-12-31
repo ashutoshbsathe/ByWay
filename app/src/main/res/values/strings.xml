@@ -10,7 +10,7 @@
     <string name="newuserquestion">New User ?</string>
     <string name="signup">Sign Up</string>
     <string name="title_activity_maps">Map</string>
-    <string name="mapsactivity_hint_starting_location">Starting Location</string>
+    <string name="mapsactivity_hint_starting_location">Riding from current location</string>
     <string name="mapsactivity_hint_destination">Enter your destination</string>
     <string name="appbar_mode_edit">Edit Mode</string>
     <string name="appbar_share">Share This App</string>
@@ -18,8 +18,8 @@
     <string name="welcome_swipe_share">SHARE</string>
     <string name="welcome_swipe_ride">RIDE</string>
     <string name="welcome_swipe_neutral">SWIPE</string>
-    <string name="welcome_swipe_neutral_header">Swipe the button vertically</string>
+    <string name="welcome_swipe_neutral_header">Swipe up/down</string>
     <string name="mapsactivity_help_text">Help</string>
-    <string name="mapsactivity_view_ride_details">View Ride Details</string>
+    <string name="mapsactivity_view_ride_details">Ride Details</string>
     <string name="mapsactivity_hint_source">Enter source location</string>
 </resources>
