@@ -64,19 +64,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login"
+                    android:id="@+id/mainactivity_header"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mainactivity_hint_username"
+                    android:hint="@string/mainactivity_hint_email"
+                    android:id="@+id/mainactivity_email_layout"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -84,12 +86,15 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/mainactivity_hint_password"
                     android:layout_marginTop="20dp"
+                    android:id="@+id/mainactivity_password_layout"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleDrawable="@drawable/ic_visibility"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <RelativeLayout
@@ -121,7 +126,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/newuserquestion" />
+                            android:text="@string/newuserquestion"
+                            android:id="@+id/mainactivity_question"/>
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/mainactivity_signup"
@@ -132,7 +138,37 @@
                     </LinearLayout>
 
                 </RelativeLayout>
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OR"
+                        android:background="@android:color/white"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textSize="16sp"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/mainactivity_google_sign_in_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>

@@ -22,4 +22,8 @@
     <string name="mapsactivity_help_text">Help</string>
     <string name="mapsactivity_view_ride_details">Ride Details</string>
     <string name="mapsactivity_hint_source">Enter source location</string>
+    <string name="mainactivity_hint_email">Email</string>
+    <string name="mainactivity_signup">Sign Up</string>
+    <string name="mainactivity_question_user">Already registered ?</string>
+    <string name="mainactivity_set_password">Set Password</string>
 </resources>
