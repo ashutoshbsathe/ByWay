@@ -5,24 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:layout_marginTop="0dp"
+    android:fitsSystemWindows="false"
     android:id="@+id/mainactivity_rootlayout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <com.github.florent37.shapeofview.shapes.ArcView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:paddingBottom="10dp"
             android:elevation="10dp"
-            android:background="@color/colorPrimary"
-            />
+            android:id="@+id/mainactivity_arcview"
+            app:shape_arc_height="25dp"
+            app:shape_arc_position="bottom">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_transition"
+                android:id="@+id/mainactivity_gradient_background"/>
+        </com.github.florent37.shapeofview.shapes.ArcView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:clipToPadding="false"
             android:background="#FFFFFF"/>
     </LinearLayout>

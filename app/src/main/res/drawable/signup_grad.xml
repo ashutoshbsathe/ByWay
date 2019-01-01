@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- gradient picked up from uiGradients -->
     <gradient
-        android:startColor="#8E2DE2"
-        android:endColor="#4A00E0"
-        android:angle="45" />
+        android:startColor="#6441A5"
+        android:endColor="#2a0845"
+        android:angle="135" />
 </shape>

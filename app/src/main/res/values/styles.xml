@@ -9,5 +9,8 @@
         <item name="android:textColorSecondary">#FFFFFFFF</item>
         <item name="android:fontFamily">@font/manrope_semibold</item>
     </style>
-
+    <style name="MainActivityTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>
