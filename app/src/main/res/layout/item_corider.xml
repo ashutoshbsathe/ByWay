@@ -51,6 +51,7 @@
                     android:layout_marginEnd="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    android:id="@+id/corideritem_ride_button"
                     android:text="RIDE"/>
             </LinearLayout>
         </LinearLayout>

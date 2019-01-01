@@ -3,6 +3,7 @@ package com.absathe.byway;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
  */
 public class CoRiderItem extends AbstractItem<CoRiderItem, CoRiderItem.ViewHolder> {
     public String name;
+    public String userId;
 
     public CoRiderItem() {
         this.name = "This is a person with some name";
@@ -25,7 +27,9 @@ public class CoRiderItem extends AbstractItem<CoRiderItem, CoRiderItem.ViewHolde
     public void setName(String name) {
         this.name = name;
     }
-
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
     public String getName() {
         return this.name;
     }
@@ -47,6 +51,8 @@ public class CoRiderItem extends AbstractItem<CoRiderItem, CoRiderItem.ViewHolde
     protected static class ViewHolder extends FastAdapter.ViewHolder<CoRiderItem> {
         @BindView(R.id.corideritem_name)
         TextView name;
+        @BindView(R.id.corideritem_ride_button)
+        MaterialButton ride;
 
         public ViewHolder(View itemView) {
             super(itemView);

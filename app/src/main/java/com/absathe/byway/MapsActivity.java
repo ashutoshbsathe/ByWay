@@ -61,7 +61,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class MapsActivity extends AppCompatActivity
+        implements OnMapReadyCallback,
+        Coriders.CommunicateCoRidersWithMapsInterface{
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -78,6 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int MODE  = RIDE;
     private final int REQUEST_TYPE_SOURCE = 2;
     private final int REQUEST_TYPE_DESTNN = 3;
+    private Coriders fragment;
 
     LocationRequest mLocationRequest;
     Location mLastLocation;
@@ -135,7 +138,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onActionSelected(SpeedDialActionItem actionItem) {
                 switch (actionItem.getId()) {
                     case R.id.mapsactivity_fab_view_coriders:
-                        Coriders fragment;
                         if(MODE == SHARE) {
                             fragment = Coriders.newInstance(1);
                         }
@@ -386,5 +388,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             default:
         }
+    }
+
+    @Override
+    public void coRiderPicked(String userID) {
+        Toast.makeText(this, userID + " selected", Toast.LENGTH_LONG).show();
+        fragment.dismiss();
     }
 }
