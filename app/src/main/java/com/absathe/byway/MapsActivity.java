@@ -130,6 +130,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .setFabImageTintColor(Color.parseColor("#FFFFFF"))
                         .setLabel(R.string.mapsactivity_fab_ride_from_current_location)
                         .create());
+        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
+                switch (actionItem.getId()) {
+                    case R.id.mapsactivity_fab_view_coriders:
+                        Coriders fragment;
+                        if(MODE == SHARE) {
+                            fragment = Coriders.newInstance(0);
+                        }
+                        else {
+                            fragment = Coriders.newInstance(1);
+                        }
+                        fragment.show(getSupportFragmentManager(), "custom_bottom_fragment_coriders");
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
     TextView.OnClickListener originClicked = new TextView.OnClickListener() {
         @Override
