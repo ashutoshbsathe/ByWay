@@ -33,6 +33,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+
     implementation 'com.github.aarsy.googlemapsanimations:googlemapsanimations:1.0.5'
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation 'com.github.florent37:shapeofview:1.4.6'
@@ -41,3 +44,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'

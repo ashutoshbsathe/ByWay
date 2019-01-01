@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "63668163178",
+    "firebase_url": "https://watchful-gear-226908.firebaseio.com",
+    "project_id": "watchful-gear-226908",
+    "storage_bucket": "watchful-gear-226908.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63668163178:android:71058ab7d063e0e1",
+        "android_client_info": {
+          "package_name": "com.absathe.byway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63668163178-tp1bil8eia1qaep4a5lf82671rv87lq8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.absathe.byway",
+            "certificate_hash": "aed8eaec4c94b4095de814fcc161b089f7e0ce63"
+          }
+        },
+        {
+          "client_id": "63668163178-5gn0eudi8r73cl8odpf71h2acrr6te7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt7xF9tFEvuIOosGcrn1xTCcBQTDe6dZI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63668163178-5gn0eudi8r73cl8odpf71h2acrr6te7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
