@@ -112,8 +112,13 @@
 
         </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
+    <com.leinardi.android.speeddial.SpeedDialView
+        android:id="@+id/mapsactivity_speedDial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp" />
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="71dp"
@@ -186,5 +191,5 @@
                 android:textColor="@android:color/white"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
-    </LinearLayout>
+    </LinearLayout-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

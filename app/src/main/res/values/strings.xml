@@ -26,4 +26,7 @@
     <string name="mainactivity_signup">Sign Up</string>
     <string name="mainactivity_question_user">Already registered ?</string>
     <string name="mainactivity_set_password">Set Password</string>
+    <string name="mapsactivity_fab_my_location">My Location</string>
+    <string name="mapsactivity_fab_view_coriders">View all co-riders</string>
+    <string name="mapsactivity_fab_ride_from_current_location">Ride from current location</string>
 </resources>

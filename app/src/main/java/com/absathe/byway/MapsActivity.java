@@ -58,6 +58,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -65,6 +67,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SupportMapFragment mapFragment;
     private TextView origin;
     private TextView destination;
+    private Marker source_marker = null;
+    private Marker destination_marker = null;
 
     private final long MAP_RIPPLE_DURATION = 10000;
     private final long MAP_INTER_RIPPLE_DURATION = 3333;
@@ -100,6 +104,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         destination = findViewById(R.id.mapsactivity_destination_textview);
         origin.setOnClickListener(originClicked);
         destination.setOnClickListener(destinationClicked);
+        initFAB();
+    }
+    private void initFAB() {
+        SpeedDialView speedDialView = findViewById(R.id.mapsactivity_speedDial);
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.mapsactivity_fab_my_location, R.drawable.ic_my_location)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, getTheme()))
+                        .setFabImageTintColor(Color.parseColor("#FFFFFF"))
+                        .setLabel(R.string.mapsactivity_fab_my_location)
+                        .create());
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.mapsactivity_fab_view_coriders, R.drawable.ic_map_person)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, getTheme()))
+                        .setFabImageTintColor(Color.parseColor("#FFFFFF"))
+                        .setLabel(R.string.mapsactivity_fab_view_coriders)
+                        .create());
+        /*
+         * TODO:
+         * Customize the string label of following item according to MODE
+         */
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.mapsactivity_fab_ride_from_current_location, R.drawable.ic_adjust)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, getTheme()))
+                        .setFabImageTintColor(Color.parseColor("#FFFFFF"))
+                        .setLabel(R.string.mapsactivity_fab_ride_from_current_location)
+                        .create());
     }
     TextView.OnClickListener originClicked = new TextView.OnClickListener() {
         @Override
@@ -149,8 +179,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(resultCode == Activity.RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(MapsActivity.this, data);
                 origin.setText(place.getName());
+                if(source_marker != null)  {
+                    source_marker.remove();
+                }
                 if(mMap != null) {
-                    mMap.addMarker(new MarkerOptions()
+                    source_marker = mMap.addMarker(new MarkerOptions()
                             .position(place.getLatLng())
                             .title("Ride starts here"));
                 }
@@ -167,8 +200,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(resultCode == Activity.RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(MapsActivity.this, data);
                 destination.setText(place.getName());
+                if(destination_marker != null) {
+                    destination_marker.remove();
+                }
                 if(mMap != null) {
-                    mMap.addMarker(new MarkerOptions()
+                    destination_marker = mMap.addMarker(new MarkerOptions()
                     .position(place.getLatLng())
                     .title("Ride ends here"));
                 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mapsactivity_fab_my_location" type="id" />
+    <item name="mapsactivity_fab_view_coriders" type="id" />
+    <item name="mapsactivity_fab_ride_from_current_location" type="id" />
+</resources>

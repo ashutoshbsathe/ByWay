@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.github.aarsy.googlemapsanimations:googlemapsanimations:1.0.5'
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation 'com.github.florent37:shapeofview:1.4.6'
+    implementation "com.leinardi.android:speed-dial:2.0.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
