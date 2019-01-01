@@ -137,10 +137,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     case R.id.mapsactivity_fab_view_coriders:
                         Coriders fragment;
                         if(MODE == SHARE) {
-                            fragment = Coriders.newInstance(0);
+                            fragment = Coriders.newInstance(1);
                         }
                         else {
-                            fragment = Coriders.newInstance(1);
+                            fragment = Coriders.newInstance(0);
                         }
                         fragment.show(getSupportFragmentManager(), "custom_bottom_fragment_coriders");
                         break;

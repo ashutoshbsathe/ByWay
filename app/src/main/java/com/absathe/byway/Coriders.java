@@ -2,6 +2,7 @@ package com.absathe.byway;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -43,28 +46,36 @@ public class Coriders extends BottomSheetDialogFragment {
     public Coriders() {
         // Required empty public constructor
     }
-
+    private Context context;
     private List<CoRiderItem> items = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // create ContextThemeWrapper from the original Activity Context with the custom theme
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
+
+        // clone the inflater using the ContextThemeWrapper
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         // Inflate the layout for this fragment
-        View ret = inflater.inflate(R.layout.fragment_coriders, container, false);
+        View ret = localInflater.inflate(R.layout.fragment_coriders, container, false);
+        System.out.println("I am inside onCreateView");
         RecyclerView recyclerView = ret.findViewById(R.id.coriders_fragment_recyclerview);
         Bundle args = getArguments();
         int mode = args.getInt("MODE", 0);
         if(mode != 0) {
             CoRiderItem example = new CoRiderItem();
-            example.setName("THIS IS A PERSON THAt WANTS A RIDE");
+            example.setName("THIS IS A PERSON THAT WANTS A RIDE");
             items.add(example);
         }
         else {
             CoRiderItem example = new CoRiderItem();
-            example.setName("THIS IS A PERSON THAt WANTS TO SHARE RIDE");
+            example.setName("THIS IS A PERSON THAT WANTS TO SHARE RIDE");
             items.add(example);
         }
         ItemAdapter itemAdapter = new ItemAdapter();
         FastAdapter fastAdapter = FastAdapter.with(itemAdapter);
+        System.out.println("Bout to get LinearLAyoutManager");
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(fastAdapter);
         itemAdapter.add(items);
 
