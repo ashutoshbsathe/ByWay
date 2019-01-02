@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 
 public class Welcome extends Activity {
@@ -23,7 +26,9 @@ public class Welcome extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        Toolbar toolbar = findViewById(R.id.welcome_fake_toolbar);
+        toolbar.inflateMenu(R.menu.welcomeactivity_top_menu);
+        toolbar.setOnMenuItemClickListener(topMenuListener);
         View swipe = findViewById(R.id.welcome_swipe_container_parent);
         originalY = swipe.getY();
         final TextView messageOnSwipe = findViewById(R.id.welcome_swipe_text);
@@ -120,5 +125,18 @@ public class Welcome extends Activity {
         seekBar.setBackground(getDrawable(R.drawable.square));
         */
     }
+    private Toolbar.OnMenuItemClickListener topMenuListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch(item.getItemId())  {
+                case R.id.app_bar_about:
+                    startActivity(new Intent(Welcome.this, About.class));
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    };
 
 }

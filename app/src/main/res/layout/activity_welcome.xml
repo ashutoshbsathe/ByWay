@@ -22,6 +22,7 @@
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_account_circle"
                 android:scaleType="centerCrop"
+                android:layout_gravity="start"
                 android:id="@+id/welcome_profile"
                 app:civ_border_color="#EEEEEE"
                 app:civ_border_width="4dp"
@@ -34,6 +35,11 @@
                 android:text="Welcome"
                 android:textColor="#FFFFFF"
                 android:layout_centerInParent="true"/>
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="#00000000"
+                android:id="@+id/welcome_fake_toolbar"/>
         </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

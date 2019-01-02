@@ -12,8 +12,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="mapsactivity_hint_starting_location">Riding from current location</string>
     <string name="mapsactivity_hint_destination">Enter your destination</string>
-    <string name="appbar_mode_edit">Edit Mode</string>
-    <string name="appbar_share">Share This App</string>
+    <string name="appbar_share">Share</string>
+    <string name="appbar_about">About Us</string>
     <string name="title_activity_welcome">Welcome</string>
     <string name="welcome_swipe_share">SHARE</string>
     <string name="welcome_swipe_ride">RIDE</string>
